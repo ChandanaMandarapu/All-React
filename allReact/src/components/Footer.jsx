@@ -3,7 +3,7 @@
 const Footer = () => {
   return (
     <footer>
-        <p>this is footer</p>
+        <p>Copyright &copy; 2023</p>
     </footer>
   )
 }
