@@ -2,37 +2,42 @@
 import { useState } from "react";
 
 const Content = () => {
-    const [name, setName] = useState('chandu')
+    const [items, setItems] = useState([
+        {
+            id: 1,
+            checked: false,
+            item: "Chocolate Milkshake"
+        },
+        {
+            id: 2,
+            checked: false,
+            item: "Item2"
+        },
+        {
+            id: 3,
+            checked: false,
+            item: "Item3"
+        }
+    ])
 
-    const[count,setCount] = useState(0)
-
-  const handleNameChange = () => {
-    const names = ["krish", "karthik", "kushal"];
-    const int = Math.floor(Math.random() * 3);
-    setName(names[int]);
-  };
-
-  const handleClick = () => {
-    setCount(count + 1)
-    console.log(count)
-  }
-
-  //   click events anonymous functions
-  const handleClick2 = () => console.log("${name} was clicked");
-
-  const handleClick3 = (e) => console.log(e.target);
-
+    const handleCheck = (id) => {
+        console.log(`key:  ${id}`)
+    }
   return (
     <main>
-      <p onDoubleClick={handleClick2}>Hey {name}</p>
-
-      <button onClick={handleNameChange}>Click It</button>
-
-      {/* passing parameters anonymous functions */}
-      <button onClick={() => handleClick("chandana")}>Click It</button>
-
-      {/* loging event object */}
-      <button onClick={(e) => handleClick3(e)}>Click Here</button>
+      <ul>
+        {items.map((item) => (
+            <li className="item" key={item.id}>
+                <input 
+                type="checkbox"
+                onChange={() => handleCheck(item.id)}
+                checked = {item.checked} 
+                />
+                <label> {item.item}</label>
+                <button className="btn">❌</button>
+            </li>
+        ))}
+      </ul>
     </main>
   );
 };
