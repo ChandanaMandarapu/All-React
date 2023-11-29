@@ -2,42 +2,63 @@
 import { useState } from "react";
 
 const Content = () => {
-    const [items, setItems] = useState([
-        {
-            id: 1,
-            checked: false,
-            item: "Chocolate Milkshake"
-        },
-        {
-            id: 2,
-            checked: false,
-            item: "Item2"
-        },
-        {
-            id: 3,
-            checked: false,
-            item: "Item3"
-        }
-    ])
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      checked: true,
+      item: "Chocolate Milkshake",
+    },
+    {
+      id: 2,
+      checked: false,
+      item: "Item2",
+    },
+    {
+      id: 3,
+      checked: false,
+      item: "Item3",
+    },
+  ]);
 
-    const handleCheck = (id) => {
-        console.log(`key:  ${id}`)
-    }
+  const handleCheck = (id) => {
+    // defining state to check the items of list using ternary operator
+    const listItems = items.map((item) =>
+      item.id === id ? { ...item, checked: !item.checked } : item
+    );
+    setItems(listItems);
+    localStorage.setItem("shoppinglist", JSON.stringify(listItems));
+  };
+  const handleDelete = (id) => {
+    const listItems = items.filter((item) => item.id !== id);
+    setItems(listItems);
+    localStorage.setItem("shoppinglist", JSON.stringify(listItems));
+  };
   return (
     <main>
-      <ul>
-        {items.map((item) => (
+      {items.length ? (
+        <ul>
+          {items.map((item) => (
             <li className="item" key={item.id}>
-                <input 
+              <input
                 type="checkbox"
                 onChange={() => handleCheck(item.id)}
-                checked = {item.checked} 
-                />
-                <label> {item.item}</label>
-                <button className="btn">❌</button>
+                checked={item.checked}
+              />
+              <label
+                style={item.checked ? { textDecoration: "line-through" } : null}
+                onDoubleClick={() => handleCheck(item.id)}
+              >
+                {item.item}
+              </label>
+              <button onClick={() => handleDelete(item.id)} className="btn">
+                ❌
+              </button>
             </li>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <p style={{ marginTop: "2rem" }}>Your list is empty</p>
+      )}
     </main>
   );
 };
