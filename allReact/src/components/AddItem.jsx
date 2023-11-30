@@ -1,27 +1,30 @@
-import React from 'react'
-
-const AddItem = ({newItem,setNewItem,handleSubmit}) => {
+import React from "react";
+import { useRef } from "react";
+const AddItem = ({ newItem, setNewItem, handleSubmit }) => {
+  const inputRef = useRef();
   return (
-    <form className='addForm' onSubmit={handleSubmit}>
-        <label htmlFor="addItem">Add Item</label>
-        <input 
+    <form className="addForm" onSubmit={handleSubmit}>
+      <label htmlFor="addItem">Add Item</label>
+      <input
         autoFocus
-        id = 'addItem'
-        type='text'
-        placeholder='Add Item'
+        ref={inputRef}
+        id="addItem"
+        type="text"
+        placeholder="Add Item"
         required
         value={newItem}
         onChange={(e) => setNewItem(e.target.value)}
-         />
-         <button
-         className='add-btn'
-         type='submit'
-         aria-label='Add Item'
-         >
-            ➕
-         </button>
+      />
+      <button
+        className="add-btn"
+        type="submit"
+        aria-label="Add Item"
+        onClick={() => inputRef.current.focus()}
+      >
+        ➕
+      </button>
     </form>
-  )
-}
+  );
+};
 
-export default AddItem
+export default AddItem;
