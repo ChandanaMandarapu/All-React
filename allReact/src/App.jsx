@@ -4,7 +4,7 @@ import AddItem from "./components/AddItem";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
 import "./App.css";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 
 function App() {
   const [items, setItems] = useState(
@@ -14,9 +14,22 @@ function App() {
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
 
+// useEffect works asynchronously everytime the state is changed before and after are logged to console but not inside useEffect as useEffect hook runs the code after everything below in the component is rendered as well
+
+//  console.log("before useeffect")
+//   useEffect(() => {
+//     console.log("inside useeffect")
+//   })
+//   console.log("after useeffect")
+
+// using useEffect to save the items
+
+useEffect(() => {
+  localStorage.setItem("shoppinglist", JSON.stringify(items));
+})
   const setAndSaveItems = (newItems) => {
     setItems(newItems);
-    localStorage.setItem("shoppinglist", JSON.stringify(newItems));
+    
   };
 
   const addItem = (item) => {
