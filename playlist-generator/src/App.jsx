@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.jsx
+import React, { useState } from 'react';
+import GeneratorForm from './components/GeneratorForm';
+import GeneratedPlaylist from './components/GeneratedPlaylist';
+import axios from 'axios';
+import './index.css'; // Import the main CSS file for styling
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [generatedPlaylist, setGeneratedPlaylist] = useState([]);
+  const [showGeneratorForm, setShowGeneratorForm] = useState(true); // Initial state for visibility
+
+  const generatePlaylist = async (genre, mood, theme) => {
+    try {
+      const response = await fetchPlaylistFromAPI(genre, mood, theme);
+      setGeneratedPlaylist(response);
+      setShowGeneratorForm(false); // Hide GeneratorForm after generating playlist
+    } catch (error) {
+      console.error('Error fetching playlist:', error.message);
+      setGeneratedPlaylist([]);
+    }
+  };
+
+  const fetchPlaylistFromAPI = async (genre, mood, theme) => {
+    try {
+      const response = await axios.get(
+        `https://itunes.apple.com/search?term=${genre}+${mood}+${theme}&media=music&limit=5`
+      );
+
+      const playlist = response.data.results.map((song) => ({
+        title: song.trackName,
+        artist: song.artistName,
+        previewUrl: song.previewUrl,
+      }));
+
+      return playlist;
+    } catch (error) {
+      console.error('Error fetching playlist from API:', error.message);
+      return [];
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="container">
+      <h1>Playlist Generator</h1>
+      {showGeneratorForm ? (
+        <GeneratorForm generatePlaylist={generatePlaylist} />
+      ) : (
+        <GeneratedPlaylist playlist={generatedPlaylist} />
+      )}
+    </div>
+  );
+};
 
-export default App
+export default App;

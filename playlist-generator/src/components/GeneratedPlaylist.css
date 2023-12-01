@@ -1,0 +1,48 @@
+ul {
+    list-style: none;
+    padding: 0;
+    color: black;
+  }
+  
+  li {
+    margin-bottom: 10px;
+    padding: 20px;
+    background: linear-gradient(black,#333);
+    color: azure;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: box-shadow 0.3s;
+  }
+  
+  li:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .audio-container {
+    width: 40%; /* Adjust the width of the audio controls container */
+  }
+  
+  audio {
+    width: 100%;
+    margin-top: 5px;
+    /* border: 1px solid #ddd; */
+    border-radius: 5px;
+  }
+  
+  audio::-webkit-media-controls-panel {
+    background: linear-gradient(to right, #80c6f8, #87dfff, #f1f0f0);
+    color: azure;
+    border-radius: 5px;
+  }
+  
+  /* Additional Styles */
+  .playlist-container {
+    padding: 0;
+  }
+  
+  .playlist-item {
+    margin-bottom: 20px;
+  }
