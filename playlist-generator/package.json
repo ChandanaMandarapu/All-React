@@ -1,5 +1,5 @@
 {
-  "name": "dream-journal",
+  "name": "playlist-generator",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,8 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "chart.js": "^4.4.0",
-    "compromise": "^14.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
